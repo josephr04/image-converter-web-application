@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!------------------------------------------------------------------
+* Image Converter Web Application
+* Email: jrosas.dev@gmail.com
+* Version: 1.0
+* Last change: 12/6/2024
+* Author: Joseph Rosas
+* Copyright 2024 Joseph Rosas
+* Website: https://github.com/josephr04/image-converter-web-application.git
+------------------------------------------------------------------->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico">
+
+    <!-- Core css -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Icons plugins -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="http://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" >
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- JSZip -->
+    <script src="/node_modules/jszip/dist/jszip.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="left-side">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Logo">
+                </a>
+            </div>
+            <ul>
+                <li><a class="section" href="#convert">Home</a></li>
+                <li><a class="section" href="#instructions">Instructions</a></li>
+            </ul>
+        </nav>
+        <nav class="right-side">
+            <div class="drop-down">
+                <div class="wrapper">
+                    <img src="assets/images/united-kingdom.png" class="selectedImg" alt="UK flag">
+                    <div class="selected">English</div>
+                </div>
+                <i class="ri-arrow-drop-down-fill"></i>
+            </div>
+            <div class="list">
+                <div class="itemL">
+                    <img src="assets/images/spain.png" alt="Spain glag">
+                    <div class="text">Español</div>
+                </div>
+                <div class="itemL">
+                    <img src="assets/images/united-kingdom.png" alt="UK flag">
+                    <div class="text">English</div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <form id="image-converter-form">
+        <div class="main-header" id="convert">
+            <div class="main-text">
+                <h1>Online Image Converter</h1>
+                <h2>Transform your images effortlessly with our Online Image Converter. Simple, fast, and free!</h2>
+            </div>
+        </div>
+        <div class="main-convert">
+            <div class="upload-box">
+                <div class="upload-section" id="uploadBox">
+                    <div class="upload-header default-message">
+                        <img src="assets/images/upload.png" alt="" class="upload-icon">
+                        <h2>Drop, Upload or click here</h2>
+                    </div>
+                    <div class="upload-header drop-message" style="display: none;">
+                        <img src="assets/images/drop.png" alt="" class="upload-icon">
+                        <h2>Drop any files here!</h2>
+                    </div>
+                    <div class="upload-header added-message" style="display: none;">
+                        <img src="assets/images/correct-file.png" alt="" class="upload-icon">
+                        <h2>File added! Start conversion or add more files.</h2>
+                    </div>
+                    <div class="upload-header converted-message" style="display: none;">
+                        <img src="assets/images/done.png" alt="" class="upload-icon">
+                        <h2>All done! Want to convert more? Click here</h2>
+                    </div>
+                    <label for="file-upload" class="custom-file-upload" id="custom-file-upload">
+                        <i class="fas fa-upload"></i>
+                        <span>Choose files</span>
+                    </label>
+                    <input type="file" id="file-upload" class="file-upload-input" multiple>
+                </div>
+            </div>
+        </div>
+        <div class="convert-options" id="options" >
+            <div class="convert-box">
+                <div class="convert-left">
+                    <h4>Target format:</h4>
+                    <div class="drop-down-all">
+                        <div class="drop-down-format">
+                            <div class="wrapper">
+                                <div class="selectedF">JPG</div>
+                            </div>
+                            <i class="ri-arrow-drop-down-fill"></i>
+                        </div>
+                        <div class="list-formats">
+                            <div class="itemF" data-format="png">
+                                <div class="text">PNG</div>
+                            </div>
+                            <div class="itemF" data-format="jpg">
+                                <div class="text">JPG</div>
+                            </div>
+                            <div class="itemF" data-format="jpeg">
+                                <div class="text">JPEG</div>
+                            </div>                         
+                            <div class="itemF" data-format="gif">
+                                <div class="text">GIF</div>
+                            </div>                           
+                            <div class="itemF" data-format="webp">
+                                <div class="text">WEBP</div>
+                            </div>
+                            <div class="itemF" data-format="tiff">
+                                <div class="text">TIFF</div>
+                            </div>
+                            <div class="itemF" data-format="bmp">
+                                <div class="text">BMP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                <div class="convert-right">
+                    <button type="submit" id="convert-all" class="button-convert">Convert</button>
+                    <button type="button" id="delete-all" class="button-delete">Delete All</button>
+                </div>
+            </div>
+        </div>
+        <div class="processing-container" id="processing-container">
+            <a class="processing"><i class="fas fa-spinner fa-spin"></i>Processing...</a>
+        </div>
+        <div class="download-all-container" id="download-all-container">
+            <a href="" class="download-all-link"><i class="fas fa-download"></i>Download All</a>
+        </div>
+        <div class="file-container"></div>
+        <div class="instruction-container" id="instructions">
+            <div class="instruction-box">
+                <div class="instruction-text">
+                    <h2>How to convert images?</h2>
+                    <h3>1. Click the <b>"Choose Files"</b> button or drop your images inside the box.</h3>
+                    <h3>2. Select a target image format from the <b>“Target format”</b> dropdown list.</h3>
+                    <h3>3. Click on the green <b>“Convert”</b> button to start the conversion.</h3>
+                </div>
+                <div class="instruction-quotes">
+                    <div class="quote">
+                        <i class="fas fa-image"></i>
+                        <h3>Up to 10 images <span style="font-size: 12px;">(Max image size 10MB).</span></h1>
+                    </div>
+                    <div class="quote">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Convert into different formats.</h1>
+                    </div>
+                    <div class="quote">
+                        <i class="fas fa-tags"></i>
+                        <h3>Easy and free.</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <footer>
+        <p>&copy; 2024 Joseph Rosas. All rights reserved.</p>
+    </footer>
+
+    <!-- core js -->
+    <script type="module" src="components/script.js"></script>
+
+</body>
+
+</html>
