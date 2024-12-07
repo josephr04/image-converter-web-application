@@ -270,7 +270,6 @@ form.addEventListener('submit', async (event) => {
     startProcessing();
 
     event.preventDefault();
-    debugger
     const files = fileInput.files;
 
     if (!files.length) {
