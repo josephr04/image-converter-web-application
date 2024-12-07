@@ -10,6 +10,15 @@ from app.api.utils import convert_image, periodic_cleaning, clean_uploads_folder
 
 router = APIRouter()
 
+@router.get("/debug/tmp")
+async def debug_tmp():
+    tmp_dir = "/tmp"
+    if not os.path.exists(tmp_dir):
+        return {"error": "The /tmp directory does not exist."}
+    
+    contents = os.listdir(tmp_dir)
+    return {"tmp_contents": contents}
+
 # Defines writable directories for Vercel or local development
 if os.getenv("VERCEL"):
     BASE_DIR = Path("/tmp")
