@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import List
 
 from fastapi import APIRouter, UploadFile, Form, HTTPException, BackgroundTasks
@@ -9,8 +10,19 @@ from app.api.utils import convert_image, periodic_cleaning, clean_uploads_folder
 
 router = APIRouter()
 
-UPLOAD_DIR = settings.UPLOAD_DIR
-CONVERTED_DIR = settings.CONVERTED_DIR
+# Defines writable directories for Vercel or local development
+if os.getenv("VERCEL"):
+    BASE_DIR = Path("/tmp")
+else:
+    BASE_DIR = Path(".")
+
+UPLOAD_DIR = BASE_DIR / settings.UPLOAD_DIR
+CONVERTED_DIR = BASE_DIR / settings.CONVERTED_DIR
+
+# Ensure both directories exist
+for directory in [UPLOAD_DIR, CONVERTED_DIR]:
+    if not directory.exists():
+        directory.mkdir(parents=True, exist_ok=True)
 
 # Starts periodic cleaning to remove processed images from the 'converted' directory that are no longer needed.
 periodic_cleaning()
