@@ -140,6 +140,7 @@ document.querySelector('.download-all-link').addEventListener('click', async (e)
 function updateFileCardsForDownload(fileInfoArray) {
     fileInfoArray.forEach(({ originalName, newName, filePath }) => {
         const $existingCard = $(`[data-file-name="${originalName}"]`);
+        const newName = newName.replace('converted/', '');
 
         if ($existingCard.length) {
             // Updates the file card with the new file details
