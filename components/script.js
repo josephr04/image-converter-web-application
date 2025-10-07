@@ -45,7 +45,7 @@ const listFormats = document.querySelector(".list-formats");
 const selectedFormat = document.querySelector(".selectedF");
 
 // Initial configuration
-const backendBaseURL = "http://imageconverter.ddns.net:3000/";
+const backendBaseURL = "https://image-converter-web-application.onrender.com";
 const maxFiles = 10;
 const maxSize = 10 * 1024 * 1024;
 let formatSelected = "jpg";
